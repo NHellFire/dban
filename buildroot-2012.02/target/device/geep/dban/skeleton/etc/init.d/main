@@ -330,6 +330,30 @@ do
 	fi
 done
 
+# To TFTP
+TFTP_HOST=
+for x in $(cat /proc/cmdline); do
+	case $x in
+		tftp=*)
+			TFTP_HOST=${x#tftp=}
+			TFTP_HOST=${TFTP_HOST/:/ }
+		;;
+		esac
+done
+
+if [ -n "$TFTP_HOST" ]; then
+	MAC=$(ifconfig | awk '/HWaddr/{print $5;exit}')
+	MAC=${MAC//:/-}
+
+	tftp $TFTP_HOST >/dev/null 2>&1 <<EOF
+mode binary
+put "/var/log/dban.tar.gz" "/DBANLOG/dban $STARTTIME ($MAC).tar.gz"
+quit
+EOF
+fi
+
+
+
 if test -x /etc/init.d/report-nansi
 then
 	# @FIXME:
