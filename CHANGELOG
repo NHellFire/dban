@@ -1,0 +1,17 @@
+
+
+
+Released 2.2.8 November 22nd, 2013:
+- Buildroot updated to 2012.02 (Thanks to sourceforge user HellFire / github NHellFire!).
+- /bin/sh replaced by /bin/bash.
+- Kernel messages are not shown any more on top of DBAN GUI.
+- Dwipe (erasure engine) is integrated as a package to the Buildroot.
+- "nousb" option added in autonuke mode (in auto mode USB sticks/hdds will not be erased. No more accidents!).
+- Fixed erasure failure if one of the disks was unplugged while in disk selection screen.
+- Card reader/unknown device erasure crash is fixed.
+
+Released 2.2.7 September 10th, 2012:
+- Updated/fixed packages: jpeg.
+- Issues resolved (http://bugs.uclibc.org):
+#3137285: hangs on starting isolinux
+#3151269: dban-2.2.6_i586.iso "No Configuration File Found" errors
