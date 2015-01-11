@@ -1,2 +1,1 @@
-# buildroot suffix was removed, so keep version here now
-DBAN_VERSION=2.2.8
+buildroot/target/device/geep/dban/skeleton/etc/version
