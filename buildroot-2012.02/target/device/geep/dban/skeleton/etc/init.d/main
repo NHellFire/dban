@@ -116,6 +116,7 @@ dbanLog "$DBAN_NAME $DBAN_VERSION started."
 
 # Record the start time.
 DBAN_START=`date '+%a %b %d %T %Y'`
+STARTTIME=$(date "+%Y-%m-%d %H%M")
 
 # @FIXME:
 /etc/init.d/lshw 2>/dev/null
@@ -313,8 +314,21 @@ echo "</$DBAN_NAME_SHORT>" >>/var/log/lshw.xml
 
 cp /var/log/lshw.xml /var/log/dban.xml
 
-# @FIXME:
+# Save log
+# @FIXME: zip would be better but need to add a package first
 #( cd /var/log && zip -9q dban.zip dban.xml )
+( cd /var/log && tar -czf dban.tar.gz dban.xml )
+
+
+# To FAT filesystem
+for ii in $DBAN_HD_FOUND $DBAN_SD_FOUND $DBAN_CCISS_FOUND
+do
+	# Check for the log directory.
+	if mdir -b -f -i "$ii" ::/DBANLOG/ 2>/dev/null 1>&2
+	then
+		mcopy -i "$ii" "/var/log/dban.zip" "::/DBANLOG/dban $STARTTIME.zip"
+	fi
+done
 
 if test -x /etc/init.d/report-nansi
 then
