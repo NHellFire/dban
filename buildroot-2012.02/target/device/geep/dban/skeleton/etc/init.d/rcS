@@ -1,0 +1,133 @@
+#!/bin/bash
+# vim: tabstop=3
+
+. /etc/init.d/include
+
+# Change to the second virtual console. Let kernel messages go to the first.
+#chvt 2
+
+
+# Parse kernel cmdline
+for o in `cat /proc/cmdline`; do
+	case $o in
+		quiet)
+			dmesg -n 4
+		;;
+		silent)
+			dmesg -n 1
+		;;
+	esac
+done
+
+# Clear any stray boot messages.
+clear
+
+# Blue background
+echo -e -n "\033[44m"
+
+# Grey foreground. 
+echo -e -n "\033[37m"
+
+# Disable screen blanking.
+echo -e -n "\033[9;0]" 
+
+# Clear the screen.
+echo -e -n "\033[2J"
+
+
+# Print the product banner.
+echo "$DBAN_NAME $DBAN_VERSION is starting."
+
+[ -n "$verbose" ] && echo -n "Programming the console... "
+[ -n "$verbose" ] && echo -e "\\033[30;47]\033[9;0]screen blanking disabled." 
+
+[ -n "$verbose" ] && echo -n "Mounting the proc filesystem... "
+if mount -t proc proc /proc
+then
+	[ -n "$verbose" ] && echo "done."
+else
+	dbanFail "Unable to mount the proc filesystem. This is a $DBAN_NAME_SHORT build error."
+fi
+
+#[ -n "$verbose" ] && echo -n "Mounting the usb filesystem... "
+#if mount -t usbfs usbfs /proc/bus/usb
+#then
+#	[ -n "$verbose" ] && echo "done."
+#else
+#	dbanFail "Unable to mount the usb filesystem. This is a $DBAN_NAME_SHORT build error."
+#fi
+
+[ -n "$verbose" ] && echo -n "Mounting the sys filesystem... "
+if mount -t sysfs sysfs /sys
+then
+	[ -n "$verbose" ] && echo "done."
+else
+	dbanFail "Unable to mount the sys filesystem. This is a $DBAN_NAME_SHORT build error."
+fi
+
+[ -n "$verbose" ] && echo -n "Mounting the pts filesystem... "
+[ -d /dev/pts ] || mkdir -p /dev/pts
+if mount -t devpts devpts /dev/pts
+then
+	[ -n "$verbose" ] && echo "done."
+else
+	dbanFail "Unable to mount the pts filesystem. This is a $DBAN_NAME_SHORT build error."
+fi
+
+[ -n "$verbose" ] && echo -n "Starting the system logging daemon... "
+if syslogd
+then
+	[ -n "$verbose" ] && echo "done."
+else
+	dbanFail "The syslogd program failed with error $?."
+fi
+
+[ -n "$verbose" ] && echo -n "Starting the kernel logging daemon... "
+if klogd
+then
+	[ -n "$verbose" ] && echo "done."
+else
+	dbanFail "The klogd program failed with error $?."
+fi
+
+# In the LZMA image, the depmod program is smaller than pregenerated module aliases.
+[ -n "$verbose" ] && echo -n "Generating module dependencies... "
+if depmod -a
+then
+	[ -n "$verbose" ] && echo "done."
+else
+	dbanFail "The depmod program failed with error $?."
+fi
+
+[ -n "$verbose" ] && echo -n "Starting the udev daemon... "
+if udevd --daemon
+then
+	[ -n "$verbose" ] && echo "done."
+else
+	dbanFail "The udevd program failed with error $?."
+fi
+
+[ -n "$verbose" ] && echo -n "Starting the udev monitor... "
+if udevadm monitor -e >/var/log/udev.log &
+then
+	[ -n "$verbose" ] && echo "done."
+else
+	dbanFail "The udevadm monitor command failed with error $?."
+fi
+
+[ -n "$verbose" ] && echo -n "Loading drivers... "
+if udevadm trigger
+then
+	:
+else
+	dbanFail "The udevadm trigger command failed with error $?."
+fi
+
+if udevadm settle
+then
+	[ -n "$verbose" ] && echo "done."
+else
+	dbanFail "The udevadm settle command failed with error $?."
+fi
+
+# eof

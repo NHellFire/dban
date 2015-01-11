@@ -1,0 +1,6 @@
+config BR2_PACKAGE_WGET
+	bool "wget"
+	help
+	  Network utility to retrieve files from http, https and ftp.
+
+	  http://www.gnu.org/software/wget/

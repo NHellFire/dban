@@ -1,0 +1,2 @@
+# buildroot suffix was removed, so keep version here now
+DBAN_VERSION=2.2.8

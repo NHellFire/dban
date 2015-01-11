@@ -1,0 +1,6 @@
+config BR2_PACKAGE_IMGSHOW
+	bool "imgshow"
+	default n
+	help
+	  Tool to show image.
+

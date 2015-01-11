@@ -1,0 +1,2 @@
+# firmware
+ACTION=="add", SUBSYSTEM=="firmware", ENV{FIRMWARE}=="*", RUN+="/lib/udev/firmware.sh"

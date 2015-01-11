@@ -1,0 +1,13 @@
+diff -Ndru package/avahi.dist/avahi.mk package/avahi/avahi.mk
+--- package/avahi.dist/avahi.mk	2010-02-26 08:52:48.000000000 -0600
++++ package/avahi/avahi.mk	2010-05-03 13:00:19.000000000 -0500
+@@ -143,8 +143,7 @@
+ 	rm -rf $(TARGET_DIR)/etc/dhcp3/
+ 	$(INSTALL) -D -m 0755 package/avahi/busybox-udhcpc-default.script $(TARGET_DIR)/usr/share/udhcpc/default.script
+ 	$(INSTALL) -m 0755 package/avahi/S05avahi-setup.sh $(TARGET_DIR)/etc/init.d/
+-	rm -f $(TARGET_DIR)/var/lib/avahi-autoipd
+-	ln -sf /tmp/avahi-autoipd $(TARGET_DIR)/var/lib/avahi-autoipd
++	mkdir -p $(TARGET_DIR)/var/lib/avahi-autoipd
+ endif
+ ifeq ($(BR2_PACKAGE_AVAHI_DAEMON),y)
+ 	$(INSTALL) -m 0755 package/avahi/S50avahi-daemon $(TARGET_DIR)/etc/init.d/

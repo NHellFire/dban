@@ -1,0 +1,6 @@
+config BR2_PACKAGE_GNUCHESS
+	bool "gnuchess"
+	help
+	  GNU Chess lets most modern computers play a full game of chess.
+
+	  http://ftp.gnu.org/pub/gnu/chess

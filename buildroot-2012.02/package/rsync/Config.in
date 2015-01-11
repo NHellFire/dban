@@ -1,0 +1,6 @@
+config BR2_PACKAGE_RSYNC
+	bool "rsync"
+	help
+	  File transfer program to keep remote files in sync.
+
+	  http://rsync.samba.org/
