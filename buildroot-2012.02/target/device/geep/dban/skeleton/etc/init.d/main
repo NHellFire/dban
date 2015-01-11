@@ -39,6 +39,7 @@ fi
 DBAN_FD_FOUND=$(find /dev -type b | grep '/fd[0-9]\+$' )
 DBAN_HD_FOUND=$(find /dev -type b | grep '/hd[a-z]\+$' )
 DBAN_SD_FOUND=$(find /dev -type b | grep '/sd[a-z]\+$' )
+DBAN_CCISS_FOUND=$(find /dev/cciss -type b | grep '/c[0-9]d[0-9]+$' )
 
 [ -n "$verbose" ] && echo -n "Enabling DMA on PATA drives... "
 for ii in $DBAN_HD_FOUND
@@ -85,7 +86,7 @@ lshw -xml    >/var/log/lshw.xml
 
 
 # @TODO: Wipe floppy drives?
-for ii in $DBAN_HD_FOUND $DBAN_SD_FOUND
+for ii in $DBAN_HD_FOUND $DBAN_SD_FOUND $DBAN_CCISS_FOUND
 do
 	# Check for the log directory.
 	if ! mdir -b -f -i "$ii" ::/DBANLOG/ 2>/dev/null 1>&2
@@ -101,7 +102,7 @@ do
 	fi
 done
 
-if test -z "$DBAN_HD_FOUND" -a -z "$DBAN_SD_FOUND"
+if test -z "$DBAN_HD_FOUND" -a -z "$DBAN_SD_FOUND" -a -z "$DBAN_CCISS_FOUND"
 then
 	dbanFail "Disks not found. $DBAN_NAME_SHORT could need a driver for this computer."
 
