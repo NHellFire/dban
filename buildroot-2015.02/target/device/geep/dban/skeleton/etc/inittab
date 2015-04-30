@@ -1,0 +1,7 @@
+::sysinit:/etc/init.d/rcS
+
+tty1::once:/etc/init.d/main
+#tty2::respawn:/usr/bin/less /var/log/messages
+#tty3::respawn:/usr/bin/less /var/log/lshw.txt
+tty4::askfirst:/bin/sh
+tty5::askfirst:/bin/sh

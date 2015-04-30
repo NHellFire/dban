@@ -1,0 +1,97 @@
+#!/bin/bash
+# /etc/init.d/lshw
+# vi: tabstop=3
+#
+# We are doing this to avoid duplicating the hardware detection code in the dwipe program.
+
+. /etc/init.d/include
+
+LSHW_DISKS_FILE='/var/log/lshw.disks'
+
+# Obtain disk information and strip whitespace.
+lshw -C disk 2>/dev/null | sed -e 's/^[ ]*//' -e 's/[ ]*$//' -e 's/: \?/%/' >"$LSHW_DISKS_FILE"
+
+lshw_label ()
+{
+	if test -n "$LSHW_DEVICE"
+	then
+		if test "$LSHW_VENDOR" = 'ATA' -a "$LSHW_DESCRIPTION" = 'SCSI Disk'
+		then
+			LSHW_VENDOR=''
+			LSHW_DESCRIPTION='ATA Disk'
+		fi
+
+		LSHW_LABEL=$(echo "$LSHW_DESCRIPTION $LSHW_VENDOR $LSHW_PRODUCT $LSHW_VERSION $LSHW_SIZE $LSHW_SERIAL" | sed -e 's/^ *//' -e 's/ *$//' -e 's/  \+/ /g')
+
+		[ -z "LSHW_LABEL" ] && LSHW_LABEL="Unrecognized Device (Please report me.)"
+
+		echo -n "$LSHW_LABEL"  >"$LSHW_DEVICE".label
+	fi
+}
+
+
+while IFS='%' read KEY VALUE
+do
+	if test "$(echo $KEY | cut -c1)" = '*'
+	then
+		LSHW_BINGO=off
+		lshw_label
+	fi
+	
+	if test "$KEY" = '*-disk'
+	then
+		LSHW_BINGO=on
+		
+		# Clear the variables for the next record.
+		LSHW_DESCRIPTION=''
+		LSHW_DEVICE=''
+		LSHW_PRODUCT=''
+		LSHW_SERIAL=''
+		LSHW_SIZE=''
+		LSHW_VENDOR=''
+		LSHW_VERSION=''
+		
+		continue
+	fi
+	
+	if test "$LSHW_BINGO" = off
+	then
+		continue
+	fi
+	
+	case "$KEY" in
+		'capacity')
+			# Also set by the 'size' property.
+			LSHW_SIZE="$VALUE"
+			;;
+		'description')
+			LSHW_DESCRIPTION="$VALUE"
+			;;
+		'logical name')
+			LSHW_DEVICE="$VALUE"
+			;;
+		'product')
+			LSHW_PRODUCT="$VALUE"
+			;;
+		'serial')
+			LSHW_SERIAL="$VALUE"
+			;;
+		'size')
+			# Also set by the 'capacity' property.
+			LSHW_SIZE="$VALUE"
+			;;
+		'vendor')
+			LSHW_VENDOR="$VALUE"
+			;;
+		'version')
+			LSHW_VERSION="$VALUE"
+			;;
+	esac
+done <"$LSHW_DISKS_FILE"
+
+if test "$LSHW_BINGO" = on
+then
+	lshw_label
+fi
+
+# eof

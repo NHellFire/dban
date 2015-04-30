@@ -1,0 +1,10 @@
+#!/bin/sh
+
+DBAN_NAME="Darik's Boot and Nuke"
+DBAN_NAME_SHORT="DBAN"
+DBAN_VERSION="2.2.8"
+
+# The rc scripts and dwipe program use these variables to create banners.
+export DBAN_NAME
+export DBAN_NAME_SHORT
+export DBAN_VERSION

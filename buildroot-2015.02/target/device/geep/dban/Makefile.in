@@ -1,0 +1,3 @@
+BR2_BOARD_PATH=target/device/geep/dban
+TARGET_SKELETON=$(BR2_BOARD_PATH)/skeleton
+TARGET_DEVICE_TABLE=$(BR2_BOARD_PATH)/device_table.txt
