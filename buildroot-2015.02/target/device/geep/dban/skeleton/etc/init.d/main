@@ -39,7 +39,7 @@ fi
 DBAN_FD_FOUND=$(find /dev -type b | grep '/fd[0-9]\+$' )
 DBAN_HD_FOUND=$(find /dev -type b | grep '/hd[a-z]\+$' )
 DBAN_SD_FOUND=$(find /dev -type b | grep '/sd[a-z]\+$' )
-DBAN_CCISS_FOUND=$(find /dev/cciss -type b | grep '/c[0-9]d[0-9]+$' )
+DBAN_CCISS_FOUND=$(find /dev/cciss -type b 2>/dev/null | grep '/c[0-9]d[0-9]+$' )
 
 [ -n "$verbose" ] && echo -n "Enabling DMA on PATA drives... "
 for ii in $DBAN_HD_FOUND
