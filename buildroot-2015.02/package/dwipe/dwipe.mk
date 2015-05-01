@@ -5,7 +5,7 @@
 #############################################################
 DWIPE_VERSION:=2.1.0
 DWIPE_SOURCE:=dwipe-$(DWIPE_VERSION).tar.gz
-DWIPE_SITE:=http://
+DWIPE_SITE:=https://github.com/NHellFire/dban/raw/master/dl/
 DWIPE_INSTALL_STAGING = YES
 DWIPE_INSTALL_TARGET = YES
 DWIPE_CONF_OPT =
