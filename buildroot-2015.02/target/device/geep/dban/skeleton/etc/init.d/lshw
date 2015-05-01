@@ -26,6 +26,13 @@ lshw_label ()
 		[ -z "LSHW_LABEL" ] && LSHW_LABEL="Unrecognized Device (Please report me.)"
 
 		echo -n "$LSHW_LABEL"  >"$LSHW_DEVICE".label
+
+
+		# Dump variables in sourceable script
+		# This will eventually be used to generate a dummy bootsector to show wipe status
+		for x in LSHW_DESCRIPTION LSHW_VENDOR LSHW_PRODUCT LSHW_VERSION LSHW_SIZE LSHW_SERIAL; do
+			printf "$x=\"%s\"\n" "${!x}"
+		done > "$LSHW_DEVICE.env"
 	fi
 }
 
