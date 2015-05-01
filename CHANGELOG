@@ -8,6 +8,9 @@ Released v3.0.0, 1st May 2015:
   Fixes crashing with certain devices
   Appears to have been caused by long serial numbers
 
+- dwipe: Fix reporting process crashed after successful wipe
+         when not wiping all disks
+
 - kernel:
 	- Enable HPSA driver
 	- Enable filesystem drivers

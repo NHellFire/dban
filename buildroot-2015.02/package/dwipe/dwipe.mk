@@ -3,7 +3,7 @@
 # dwipe
 #
 #############################################################
-DWIPE_VERSION:=2.1.0
+DWIPE_VERSION:=2.1.1
 DWIPE_SOURCE:=v$(DWIPE_VERSION).tar.gz
 DWIPE_SITE:=https://github.com/NHellFire/dwipe/archive
 DWIPE_INSTALL_STAGING = YES
