@@ -4,19 +4,19 @@
 #
 #############################################################
 DWIPE_VERSION:=2.1.0
-DWIPE_SOURCE:=dwipe-$(DWIPE_VERSION).tar.gz
-DWIPE_SITE:=https://github.com/NHellFire/dban/raw/master/dl/
+DWIPE_SOURCE:=v$(DWIPE_VERSION).tar.gz
+DWIPE_SITE:=https://github.com/NHellFire/dwipe/archive
 DWIPE_INSTALL_STAGING = YES
 DWIPE_INSTALL_TARGET = YES
 DWIPE_CONF_OPT =
-DWIPE_DEPENDENCIES = uclibc
+DWIPE_DEPENDENCIES = uclibc ncurses
 DWIPE_DIR:=$(BUILD_DIR)/dwipe-$(DWIPE_VERSION)
 DWIPE_BINARY:=dwipe
 DWIPE_TARGET_BINARY:=usr/local/bin/dwipe
 DWIPE_CAT:= $(ZCAT)
 
 $(DL_DIR)/$(DWIPE_SOURCE):
-	# $(WGET) -P $(DL_DIR) $(DWIPE_SITE)/$(DWIPE_SOURCE)
+	$(WGET) -P $(DL_DIR) $(DWIPE_SITE)/$(DWIPE_SOURCE)
 
 dwipe-source: $(DL_DIR)/$(DWIPE_SOURCE)
 
