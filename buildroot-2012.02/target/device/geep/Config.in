@@ -1,7 +1,0 @@
-menuconfig BR2_TARGET_GEEP
-	bool "GEEP Targets"
-
-if BR2_TARGET_GEEP
-	config BR2_TARGET_GEEP_DBAN
-		bool "Boot And Nuke"
-endif

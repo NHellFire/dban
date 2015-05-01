@@ -1,7 +1,0 @@
-config BR2_PACKAGE_KMOD
-	bool "kmod"
-	help
-	  handle kernel modules
-
-	  http://git.profusion.mobi/cgit.cgi/kmod.git/
-

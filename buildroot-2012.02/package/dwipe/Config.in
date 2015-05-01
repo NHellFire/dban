@@ -1,6 +1,0 @@
-config BR2_PACKAGE_DWIPE
-	bool "dwipe"
-	default n
-	help
-	  DBAN and EBAN wipe component.
-
