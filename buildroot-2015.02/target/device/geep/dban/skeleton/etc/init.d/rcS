@@ -100,7 +100,7 @@ else
 fi
 
 [ -n "$verbose" ] && echo -n "Starting the udev daemon... "
-if udevd --daemon
+if udevd --daemon >/var/log/udevd.log 2>&1
 then
 	[ -n "$verbose" ] && echo "done."
 else
@@ -108,7 +108,7 @@ else
 fi
 
 [ -n "$verbose" ] && echo -n "Starting the udev monitor... "
-if udevadm monitor -e >/var/log/udev.log &
+if udevadm monitor -e >/var/log/udev.log 2>&1 &
 then
 	[ -n "$verbose" ] && echo "done."
 else
