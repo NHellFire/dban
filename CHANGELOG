@@ -1,3 +1,41 @@
+Released v3.0.0, 1st May 2015:
+
+- Updated to buildroot 2015.02 (kernel 3.18.x)
+
+- Update ISOLINUX to v6.03
+
+- Import lshw SVN r2575 (Fixes #4)
+  Fixes crashing with certain devices
+  Appears to have been caused by long serial numbers
+
+- kernel:
+	- Enable HPSA driver
+	- Enable filesystem drivers
+	- Enable networking drivers
+	- Enable DHCP and BOOTP support
+
+
+- skeleton:
+	- Log all udev messages to file
+	  So that dwipe doesn't get typed over when unplugging a USB device
+
+	- Change to press any key to shutdown after wiping (run "poweroff")
+	  Previously was hold power button
+
+	- Check for CCISS devices as well
+
+	- lshw: Dump disk info to sourceable file
+	  Will later be used to generate bootcode with wipe status
+
+	- Remove lshw binary
+	  Buildroot provides a package now
+
+	# These haven't been tested, but *should* work
+	- Save log in /DBANLOG/ on specified TFTP server
+	  Specify: tftp=x.x.x.x:69 in kernel arguments
+	  Default TFTP port (69) will be used if omitted.
+
+	- Save log to FAT filesystems containing DBANLOG folder in root.
 
 
 
