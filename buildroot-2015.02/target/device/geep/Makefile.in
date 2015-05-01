@@ -1,3 +1,0 @@
-ifeq ($(BR2_TARGET_GEEP_DBAN),y)
-	include target/device/geep/dban/Makefile.in
-endif
