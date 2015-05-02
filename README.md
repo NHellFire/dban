@@ -23,7 +23,7 @@ The DBAN source code is given as a buildroot BOARD project.
 
 Start reading here:
 
-&nbsp;&nbsp;&nbsp;&nbsp;buildroot/docs/buildroot.html
+&nbsp;&nbsp;&nbsp;&nbsp;buildroot/docs/manual/manual.html
 
 
 Step 2:  Check Host Compatibility
