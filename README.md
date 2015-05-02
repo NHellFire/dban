@@ -3,7 +3,7 @@ Buildroot for Boot And Nuke
 
 &nbsp;
 
-[![Flattr this](//button.flattr.com/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=NHellFire&url=http%3A%2F%2Fgithub.com%2FNHellFire%2Fdban0 "Flattr this")
+[![Flattr this](https://button.flattr.com/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=NHellFire&url=http%3A%2F%2Fgithub.com%2FNHellFire%2Fdban0 "Flattr this")
 
 &nbsp;
 
