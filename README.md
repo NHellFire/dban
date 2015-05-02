@@ -5,8 +5,6 @@ Buildroot for Boot And Nuke
 
 [![Flattr this](https://button.flattr.com/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=NHellFire&url=http%3A%2F%2Fgithub.com%2FNHellFire%2Fdban0 "Flattr this")
 
-&nbsp;
-
 ![](https://img.shields.io/github/downloads/NHellFire/dban/latest/total.svg "Latest version")
 ![](https://img.shields.io/github/downloads/NHellFire/dban/v3.0.0/total.svg)
 ![](https://img.shields.io/github/downloads/NHellFire/dban/v2.2.8/total.svg)
