@@ -57,6 +57,15 @@ This will create the DBAN software in:
 environment.sh stub to compile local components.~~
 
 
+Step 4: Build ISO
+------------------
+
+From toplevel:
+
+    $ ./master.sh
+    
+
+
 Common Problems
 ---------------
 
