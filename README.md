@@ -3,6 +3,12 @@ Buildroot for Boot And Nuke
 
 &nbsp;
 
+![](https://img.shields.io/github/downloads/NHellFire/dban/latest/total.svg "Latest version")
+![](https://img.shields.io/github/downloads/NHellFire/dban/v3.0.0/total.svg)
+![](https://img.shields.io/github/downloads/NHellFire/dban/v2.2.8/total.svg)
+
+&nbsp;
+
 Step 1: Documentation
 ---------------------
 
