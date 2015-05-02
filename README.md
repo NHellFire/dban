@@ -1,18 +1,21 @@
 Buildroot for Boot And Nuke
 ===========================
 
+&nbsp;
 
 Step 1: Documentation
 ---------------------
 
 This is the build framework for DBAN:
 
-  http://buildroot.uclibc.org/
+   http://buildroot.uclibc.org/
 
-Read and understand the overview before trying to customize DBAN.  The DBAN
-source code is given as a buildroot BOARD project.  Start reading here:
+Read and understand the overview before trying to customize DBAN.  
+The DBAN source code is given as a buildroot BOARD project.
 
-  buildroot/docs/buildroot.html
+Start reading here:
+
+&nbsp;&nbsp;&nbsp;&nbsp;buildroot/docs/buildroot.html
 
 
 Step 2:  Check Host Compatibility
@@ -20,19 +23,19 @@ Step 2:  Check Host Compatibility
 
 Compile the default buildroot project:
 
-  $ cd buildroot
-  $ make clean
-  $ make defconfig
-  $ make
+    $ cd buildroot
+    $ make clean
+    $ make defconfig
+    $ make
 
 This should create the file:
 
-  buildroot/binaries/uclibc/rootfs.i686.ext2
+&nbsp;&nbsp;&nbsp;&nbsp;buildroot/binaries/uclibc/rootfs.i686.ext2
 
 This command will confirm a successful build:
 
-  $ e2tail buildroot/binaries/uclibc/rootfs.i686.ext2:/etc/br-version
-  0.10.0-svn-svn24295
+     $ e2tail buildroot/binaries/uclibc/rootfs.i686.ext2:/etc/br-version
+     0.10.0-svn-svn24295
 
 If a host computer cannot compile the default buildroot project, then it cannot 
 compile the DBAN buildroot project.
@@ -41,17 +44,17 @@ compile the DBAN buildroot project.
 Step 3: Build DBAN
 ------------------
 
-  $ cd buildroot
-  $ make clean
-  $ make dban_defconfig
-  $ make
+     $ cd buildroot
+     $ make clean
+     $ make dban_defconfig
+     $ make
 
 This will create the DBAN software in:
 
-  output/images
+&nbsp;&nbsp;output/images
 
-Some components are unpackaged and must be built locally.  Use the
-environment.sh stub to compile local components.
+~~Some components are unpackaged and must be built locally.  Use the
+environment.sh stub to compile local components.~~
 
 
 Common Problems
