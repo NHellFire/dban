@@ -1,3 +1,3 @@
 *.iso
-isoroot/dban.bzi
+isoroot/*/output
 buildroot*/.ccache

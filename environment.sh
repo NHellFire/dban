@@ -1,15 +1,16 @@
 #!/bin/bash
-
-# Set environment variables to use the buildroot cross compiler for this target architecture.
-ARCH=${ARCH:=i586}
-
 if [ "$0" = "$BASH_SOURCE" ]; then
 	echo "Do not run this script directly."
 	echo "Use: source environment.sh"
 	exit 1
 fi
 
-test ! -d $(readlink -e ./buildroot) && echo "$BASH_SOURCE: Incorrect working directory." && return 1
+BR2_CONFIG=buildroot/.config
+test ! -s "$BR2_CONFIG" && echo "$BASH_SOURCE: $BR2_CONFIG is missing." && return 1
+
+eval $(grep ^BR2_GCC_TARGET_ARCH "$BR2_CONFIG")
+ARCH=$BR2_GCC_TARGET_ARCH
+
 
 TOOLCHAIN_PREFIX=$(readlink -e ./buildroot/output/host)
 PATH="$TOOLCHAIN_PREFIX/usr/bin:$PATH"
@@ -24,7 +25,7 @@ STRIP="$ARCH-buildroot-linux-uclibc-strip"
 "$STRIP" --version >/dev/null || { echo "$BASH_SOURCE: $STRIP is not executable."; return 4; }
 
 CFLAGS="-Os -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=$ARCH -march=$ARCH"
-CXXFLAGS=$CXFFLAGS
+CXXFLAGS=$CFLAGS
 
 PS1="(buildroot) $PS1"
 
