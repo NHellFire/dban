@@ -3,27 +3,31 @@
 # Set environment variables to use the buildroot cross compiler for this target architecture.
 ARCH=${ARCH:=i586}
 
-# ...
+if [ "$0" = "$BASH_SOURCE" ]; then
+	echo "Do not run this script directly."
+	echo "Use: source environment.sh"
+	exit 1
+fi
 
-test ! -d $(readlink -e ./buildroot) && echo "$0: Incorrect working directory." && exit 1
+test ! -d $(readlink -e ./buildroot) && echo "$BASH_SOURCE: Incorrect working directory." && return 1
 
-STAGING_PREFIX=$(readlink -e ./buildroot/output/staging)
-PATH="$STAGING_PREFIX/bin:$STAGING_PREFIX/usr/bin:$PATH"
+TOOLCHAIN_PREFIX=$(readlink -e ./buildroot/output/host)
+PATH="$TOOLCHAIN_PREFIX/usr/bin:$PATH"
 
-CC="$ARCH-linux-uclibc-gcc"
-"$CC" --version >/dev/null || { echo "$0: $CC is not executable."; exit 2; }
+CC="$ARCH-buildroot-linux-uclibc-gcc"
+"$CC" --version >/dev/null || { echo "$BASH_SOURCE: $CC is not executable."; return 2; }
 
-CXX="$ARCH-linux-uclibc-g++"
-"$CXX" --version >/dev/null || { echo "$0: $CXX is not executable."; exit 3; }
+CXX="$ARCH-buildroot-linux-uclibc-g++"
+"$CXX" --version >/dev/null || { echo "$BASH_SOURCE: $CXX is not executable."; return 3; }
 
-STRIP="$ARCH-linux-uclibc-strip"
-"$STRIP" --version >/dev/null || { echo "$0: $STRIP is not executable."; exit 4; }
+STRIP="$ARCH-buildroot-linux-uclibc-strip"
+"$STRIP" --version >/dev/null || { echo "$BASH_SOURCE: $STRIP is not executable."; return 4; }
 
-COMPILER_PARAMETERS="-Os -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -I$STAGING_PREFIX/usr/include -I$STAGING_PREFIX/include --sysroot=$STAGING_PREFIX/ -isysroot $STAGING_PREFIX -mtune=$ARCH -march=$ARCH"
+CFLAGS="-Os -pipe -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -mtune=$ARCH -march=$ARCH"
+CXXFLAGS=$CXFFLAGS
 
-CC="$CC $COMPILER_PARAMETERS"
-CXX="$CXX $COMPILER_PARAMETERS"
-PS1="$PS1 <buildroot> "
+PS1="(buildroot) $PS1"
 
-export CC CXX PATH PS1 STAGING_PREFIX STRIP
-exec $0
+export CC CXX STRIP
+export CFLAGS CXXFLAGS
+export PATH PS1 TOOLCHAIN_PREFIX
