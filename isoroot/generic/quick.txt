@@ -12,7 +12,7 @@
     prng      Wipe all disks with the PRNG Stream method.
     quick     Wipe all disks with the Quick Erase method.
 
-  Edit the 1fsyslinux.cfg17 file on the floppy disk to change the default
+  Edit the 1fsyslinux.cfg17 file on the boot media to change the default
   behavior of DBAN. Changing the syslinux.cfg file in the CD-R/CD-RW version of
   DBAN requires remastering the ISO file.
 
