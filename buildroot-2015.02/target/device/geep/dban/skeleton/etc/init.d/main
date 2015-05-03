@@ -118,8 +118,7 @@ $DBAN_NUKE $DBAN_TARGETS
 DBAN_RESULT=$?
 
 # Reset the console, which is usually required when an ncurses program exits unexpectedly.
-echo -e "\033[?25h\033c\033[J"
-clear
+reset
 
 if [ $DBAN_RESULT -lt 0 ]; then
 	dbanFail "$DBAN_NAME_SHORT dwipe failed with result $DBAN_RESULT."
