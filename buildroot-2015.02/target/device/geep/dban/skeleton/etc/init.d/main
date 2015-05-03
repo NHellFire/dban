@@ -255,7 +255,11 @@ do
 done
 
 DATE_RFC2822=$(date -R)
-	
+
+# Write bootsectors to drives with wipe status
+echo DATE_RFC2822=\"$DATE_RFC2822\" > /tmp/datestamp
+/etc/init.d/generate-bootsectors.sh
+
 for ii in $DBAN_TARGETS
 do
 	DBAN_RESULT_FILE="$ii.result"
