@@ -9,12 +9,11 @@ DBAN_NUKE=`echo $nuke | sed -e 's/^"//' | sed -e 's/"$//'`
 # For the USB registration minimum wait.
 DBAN_USB_WAIT=$(date +%s)
 
-# Downcase and strip the heading and tailing quotes from the syslinux.cfg variable.                                                                  
+# Downcase and strip the heading and tailing quotes from the syslinux.cfg variable.
 DBAN_BARCODE_PRE=`echo $barcode_pre | tr '[A-Z]' '[a-z]' | sed -e 's/^"//' | sed -e 's/"$//'`
 DBAN_BARCODE_POST=`echo $barcode_post | tr '[A-Z]' '[a-z]' | sed -e 's/^"//' | sed -e 's/"$//'`
 
-if test -x /etc/init.d/barcode -a "$DBAN_BARCODE_PRE" = 'on'
-then
+if test -x /etc/init.d/barcode -a "$DBAN_BARCODE_PRE" = 'on'; then
 	# Get pre-wipe barcodes.
 	/etc/init.d/barcode
 fi
@@ -22,15 +21,13 @@ fi
 # USB devices can take up to 20 seconds to register.
 echo -n  "Waiting for USB devices to register..."
 DBAN_USB_WAIT=$(( $(date +%s) - DBAN_USB_WAIT ))
-while test $(( ++DBAN_USB_WAIT )) -lt 20
-do
+while test $(( ++DBAN_USB_WAIT )) -lt 20; do
 	echo -n "."
 	sleep 1
-done 
+done
 echo " done."
 
-if test -x /etc/init.d/network
-then
+if test -x /etc/init.d/network; then
 	# Start networking for EBAN builds.
 	/etc/init.d/network
 fi
@@ -42,10 +39,8 @@ DBAN_SD_FOUND=$(find /dev -type b | grep '/sd[a-z]\+$' )
 DBAN_CCISS_FOUND=$(find /dev/cciss -type b 2>/dev/null | grep '/c[0-9]d[0-9]+$' )
 
 [ -n "$verbose" ] && echo -n "Enabling DMA on PATA drives... "
-for ii in $DBAN_HD_FOUND
-do 
-	if hdparm -c1 -d1 -u1 $ii >>/var/log/hdparm.log 2>&1
-	then
+for ii in $DBAN_HD_FOUND; do
+	if hdparm -c1 -d1 -u1 $ii >>/var/log/hdparm.log 2>&1; then
 		[ -n "$verbose" ] && echo -n "$ii "
 	else
 		#dbanFail "The hdparm program failed with error $?."
@@ -54,28 +49,23 @@ do
 done
 [ -n "$verbose" ] && echo "done."
 
-if test -x /etc/init.d/raid-hacks
-then
+if test -x /etc/init.d/raid-hacks; then
 	/etc/init.d/raid-hacks
 fi
 
-if test -x /etc/init.d/raid-disassembly
-then
+if test -x /etc/init.d/raid-disassembly; then
 	/etc/init.d/raid-disassembly
 fi
 
-if test -x /etc/init.d/ata-dco
-then
+if test -x /etc/init.d/ata-dco; then
 	/etc/init.d/ata-dco
 fi
 
-if test -x /etc/init.d/ata-hpa
-then
+if test -x /etc/init.d/ata-hpa; then
 	/etc/init.d/ata-dco
 fi
 
-if test -x /etc/init.d/scsi-format
-then
+if test -x /etc/init.d/scsi-format; then
 	/etc/init.d/scsi-format
 fi
 
@@ -86,18 +76,15 @@ lshw -xml    >/var/log/lshw.xml
 
 
 # @TODO: Wipe floppy drives?
-for ii in $DBAN_HD_FOUND $DBAN_SD_FOUND $DBAN_CCISS_FOUND
-do
+for ii in $DBAN_HD_FOUND $DBAN_SD_FOUND $DBAN_CCISS_FOUND; do
 	# Check for the log directory.
-	if ! mdir -b -f -i "$ii" ::/DBANLOG/ 2>/dev/null 1>&2
-	then
+	if ! mdir -b -f -i "$ii" ::/DBANLOG/ 2>/dev/null 1>&2; then
 		# Only wipe devices without the logging directory.
 		DBAN_TARGETS="$DBAN_TARGETS $ii"
 	fi
-	
+
 	# Ensure that each device has a label.
-	if ! test -r "ii.label"
-	then
+	if ! test -r "ii.label"; then
 		echo "Unrecognized device '$ii'" >"$ii.label"
 	fi
 done
@@ -125,30 +112,27 @@ STARTTIME=$(date "+%Y-%m-%d %H%M")
 # limit messages to KERN_ERR level
 echo 3 > /proc/sys/kernel/printk
 
-[ -n "$verbose" ] && echo -e "\rStarting dwipe....                                                 " 
+[ -n "$verbose" ] && echo -e "\rStarting dwipe....                                                 "
 dbanLog "Wipe started."
 $DBAN_NUKE $DBAN_TARGETS
 DBAN_RESULT=$?
 
-# Reset the console, which is usually required when an ncurses program exits unexpectedly.                                                   
-echo -e "\033[?25h\033c\033[J"          
+# Reset the console, which is usually required when an ncurses program exits unexpectedly.
+echo -e "\033[?25h\033c\033[J"
 clear
 
-if [ $DBAN_RESULT -lt 0 ]
-then
+if [ $DBAN_RESULT -lt 0 ]; then
 	dbanFail "$DBAN_NAME_SHORT dwipe failed with result $DBAN_RESULT."
 fi
 
-if [ $DBAN_RESULT -eq 0 ]
-then
+if [ $DBAN_RESULT -eq 0 ]; then
 	# Print the success notification with emphasis.
 	echo -e "\033[1;32;40m$DBAN_NAME_SHORT succeeded."
 	echo -e "\033[1;37;40mAll selected disks have been wiped.\033[0;37;40m"
 	dbanLog "$DBAN_NAME_SHORT succeeded. All selected disks have been wiped."
 fi
 
-if [ $DBAN_RESULT -gt 0 ]
-then
+if [ $DBAN_RESULT -gt 0 ]; then
 	# Print the warning notification with emphasis.
 	echo -e "\033[1;33;40m$DBAN_NAME_SHORT finished with non-fatal errors."
 	echo -e "\033[1;37;40mCheck the log for more information.\033[0;37;40m"
@@ -157,29 +141,27 @@ fi
 
 DBAN_FINISH=`date '+%a %b %d %T %Y'`
 echo "Hardware clock operation start date:  $DBAN_START"
-echo "Hardware clock operation finish date: $DBAN_FINISH" 
+echo "Hardware clock operation finish date: $DBAN_FINISH"
 echo ""
 
-for ii in $DBAN_TARGETS
-do
+for ii in $DBAN_TARGETS; do
 	# We expect that these variables are defined in the result.
 	DWIPE_LABEL='error'
 	DWIPE_METHOD='error'
 	DWIPE_ROUNDS='error'
 	DWIPE_RESULT='error'
 	DWIPE_VERIFY='error'
-	
+
 	# Check for a readable dwipe result file.
-	if test -r "$ii.result"
-	then
+	if test -r "$ii.result"; then
 		# Read the result file, which should be a shell fragment.
 		. "$ii.result"
-		
+
 		# Set red or green on the boot splash.
 		DBAN_RESULT_COLOR=''
 		test "$DWIPE_RESULT" = 'pass' && DBAN_RESULT_COLOR='\033[30;42m'
 		test "$DWIPE_RESULT" = 'fail' && DBAN_RESULT_COLOR='\033[30;41m'
-		
+
 		echo -e " * $DBAN_RESULT_COLOR$DWIPE_RESULT\033[m $DWIPE_LABEL"
 	else
 		echo -e " * \033[1;31;40mERROR\033[1;37;40m $ii (process crash)"
@@ -188,8 +170,7 @@ done
 
 echo ""
 
-if test -x /etc/init.d/barcode -a "$DBAN_BARCODE_POST" = 'on'
-then
+if test -x /etc/init.d/barcode -a "$DBAN_BARCODE_POST" = 'on'; then
 	# Get post-wipe barcodes.
 	echo ""
 	echo "Push ENTER to input post-wipe barcodes."
@@ -198,36 +179,32 @@ then
 	clear
 fi
 
-while read REPLY
-do
+while read REPLY; do
 	echo "$REPLY"
-	if echo "$REPLY" | grep -e '^<?xml ' >/dev/null 2>&1
-	then
+	if echo "$REPLY" | grep -e '^<?xml ' >/dev/null 2>&1; then
 		echo "<$DBAN_NAME_SHORT>"
 	fi
-	
-	if echo "$REPLY" | grep -e '<node .*class="system"' >/dev/null 2>&1
-	then
+
+	if echo "$REPLY" | grep -e '<node .*class="system"' >/dev/null 2>&1; then
 		BARCODE_COUNT=0
-		while test -s "/tmp/barcode.$((++BARCODE_COUNT))"
-		do
+		while test -s "/tmp/barcode.$((++BARCODE_COUNT))"; do
 			# @FIXME: GEEP, TechProtect, Infin-IT
 			BARCODE_ID=
 			BARCODE_NAME=
-			
+
 			# @FIXME: GEEP, TechProtect, Infin-IT
 			test $BARCODE_COUNT -eq 1 && BARCODE_ID=' id="asset_number"'
 			test $BARCODE_COUNT -eq 1 && BARCODE_NAME=' name="Asset Number"'
-			#	
+			#
 			test $BARCODE_COUNT -eq 2 && BARCODE_ID=' id="operator_name"'
 			test $BARCODE_COUNT -eq 2 && BARCODE_NAME=' name="Operator Name"'
-			#	
+			#
 			test $BARCODE_COUNT -eq 3 && BARCODE_ID=' id="verifier_name"'
 			test $BARCODE_COUNT -eq 3 && BARCODE_NAME=' name="Verifier Name"'
-			#	
+			#
 			test $BARCODE_COUNT -eq 4 && BARCODE_ID=' id="comments"'
 			test $BARCODE_COUNT -eq 4 && BARCODE_NAME=' name="Comments"'
-			
+
 			echo -n "<barcode$BARCODE_ID$BARCODE_NAME>"
 			# @FIXME: Busybox `sh` is not escaping \' properly.
 			# Substitute predefined XML entities.
@@ -246,10 +223,8 @@ done </var/log/lshw.xml >/var/log/lshw.out
 mv /var/log/lshw.out /var/log/lshw.xml
 
 # @FIXME: GEEP kludge for the old release.
-for ii in 1 2 3 4 5
-do
-	if test -r /tmp/barcode.$ii
-	then
+for ii in 1 2 3 4 5; do
+	if test -r /tmp/barcode.$ii; then
 		echo "barcode$ii: $(cat /tmp/barcode.$ii)" >>/var/log/lshw.txt
 	fi
 done
@@ -260,25 +235,22 @@ DATE_RFC2822=$(date -R)
 echo DATE_RFC2822=\"$DATE_RFC2822\" > /tmp/datestamp
 /etc/init.d/generate-bootsectors.sh
 
-for ii in $DBAN_TARGETS
-do
+for ii in $DBAN_TARGETS; do
 	DBAN_RESULT_FILE="$ii.result"
 	test -r "$DBAN_RESULT_FILE" || continue;
-	
-	# Clear variables for reuse. 	
+
+	# Clear variables for reuse.
 	DWIPE_METHOD=error
 	DWIPE_ROUNDS=error
 	DWIPE_RESULT=error
 	DWIPE_VERIFY=error
-	
+
 	# Load the dwipe result shell fragment.
 	. "$DBAN_RESULT_FILE"
-	
-	while read REPLY
-	do
+
+	while read REPLY; do
 		echo "$REPLY"
-		if echo "$REPLY" | grep -e " *logical name: $ii$" >/dev/null 2>&1
-		then
+		if echo "$REPLY" | grep -e " *logical name: $ii$" >/dev/null 2>&1; then
 			echo "wipe_date: $DATE_RFC2822"
 			echo "wipe_method: $DWIPE_METHOD"
 			echo "wipe_rounds: $DWIPE_ROUNDS"
@@ -286,23 +258,21 @@ do
 			echo "wipe_verify: $DWIPE_VERIFY"
 		fi
 	done </var/log/lshw.txt >/var/log/lshw.out
-	
+
 	mv /var/log/lshw.out /var/log/lshw.txt
-	
-	while read REPLY
-	do
+
+	while read REPLY; do
 		echo "$REPLY"
-		if echo "$REPLY" | grep -e "<logicalname>$ii</logicalname>" >/dev/null 2>&1
-		then
+		if echo "$REPLY" | grep -e "<logicalname>$ii</logicalname>" >/dev/null 2>&1; then
 			echo "<wipe_date format=\"rfc2822\">$DATE_RFC2822</wipe_date>"
 			echo "<wipe_method>$DWIPE_METHOD</wipe_method>"
 			echo "<wipe_rounds>$DWIPE_ROUNDS</wipe_rounds>"
 			echo "<wipe_result>$DWIPE_RESULT</wipe_result>"
 			echo "<wipe_verify>$DWIPE_VERIFY</wipe_verify>"
 		fi
-		
+
 	done </var/log/lshw.xml >/var/log/lshw.out
-	
+
 	mv /var/log/lshw.out /var/log/lshw.xml
 done
 
@@ -358,29 +328,25 @@ fi
 
 
 
-if test -x /etc/init.d/report-nansi
-then
+if test -x /etc/init.d/report-nansi; then
 	# @FIXME:
 	/etc/init.d/report-nansi
 fi
 
-if test -x /etc/init.d/report-local
-then
+if test -x /etc/init.d/report-local; then
 	# @FIXME:
 	/etc/init.d/report-local
 fi
 
-if test -x /etc/init.d/report-mbr
-then
+if test -x /etc/init.d/report-mbr; then
 	/etc/init.d/report-mbr
 fi
 
-if test -x /etc/init.d/report-network
-then
+if test -x /etc/init.d/report-network; then
 	/etc/init.d/report-network
 fi
 
-    
+
 read -t 0.1 -N 255 # Empty keyboard buffer (remove 255 chars. should be enough)
 
 read -n 1 -p "Press any key to shutdown..."

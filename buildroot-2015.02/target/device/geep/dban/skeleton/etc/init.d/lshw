@@ -11,8 +11,7 @@ LSHW_DISKS_FILE='/var/log/lshw.disks'
 # Obtain disk information and strip whitespace.
 lshw -C disk 2>/dev/null | sed -e 's/^[ ]*//' -e 's/[ ]*$//' -e 's/: \?/%/' >"$LSHW_DISKS_FILE"
 
-lshw_label ()
-{
+lshw_label () {
 	if test -n "$LSHW_DEVICE"
 	then
 		if test "$LSHW_VENDOR" = 'ATA' -a "$LSHW_DESCRIPTION" = 'SCSI Disk'
@@ -37,18 +36,15 @@ lshw_label ()
 }
 
 
-while IFS='%' read KEY VALUE
-do
-	if test "$(echo $KEY | cut -c1)" = '*'
-	then
+while IFS='%' read KEY VALUE; do
+	if test "$(echo $KEY | cut -c1)" = '*'; then
 		LSHW_BINGO=off
 		lshw_label
 	fi
-	
-	if test "$KEY" = '*-disk'
-	then
+
+	if test "$KEY" = '*-disk'; then
 		LSHW_BINGO=on
-		
+
 		# Clear the variables for the next record.
 		LSHW_DESCRIPTION=''
 		LSHW_DEVICE=''
@@ -57,15 +53,14 @@ do
 		LSHW_SIZE=''
 		LSHW_VENDOR=''
 		LSHW_VERSION=''
-		
+
 		continue
 	fi
-	
-	if test "$LSHW_BINGO" = off
-	then
+
+	if test "$LSHW_BINGO" = off; then
 		continue
 	fi
-	
+
 	case "$KEY" in
 		'capacity')
 			# Also set by the 'size' property.
@@ -96,8 +91,7 @@ do
 	esac
 done <"$LSHW_DISKS_FILE"
 
-if test "$LSHW_BINGO" = on
-then
+if test "$LSHW_BINGO" = on; then
 	lshw_label
 fi
 

@@ -4,8 +4,8 @@
 # Ignore the INT, TERM, and SEGV signals.
 trap "" 2 3 11
 
-# Include version information.                                                   
-. /etc/version                   
+# Include version information.
+. /etc/version
 
 # Search for programs in these directories.
 PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
@@ -15,20 +15,18 @@ export PATH
 DBAN_LOG_TMP=/var/log/dban
 export DBAN_LOG_TMP
 
-dbanLog ()
-{
+dbanLog () {
 	echo "[`date +%Y/%m/%d\ %H:%M:%S`] dban: $1" >> $DBAN_LOG_TMP/dban.txt 2> /dev/null
 }
 
 
-dbanFail ()
-{
+dbanFail () {
 	sleep 5
 
 	# Reset the console, which is usually required when an ncurses program exits unexpectedly.
 	echo -e "\033[?25h\033c\033[J"
-	
-	# Print the failure notification with emphasis. 
+
+	# Print the failure notification with emphasis.
 	echo -e "\033[1;31;40m$DBAN_NAME_SHORT failed."
 	echo -e "\033[1;37;40mThe disks have not been wiped."
 	echo -e "Error:\033[0;37;40m $1"
@@ -45,18 +43,15 @@ dbanFail ()
 
 	echo "Press and hold the power button to shutdown."
 
-	while test 1 
-	do
+	while test 1; do
 		sleep 10;
 	done
 }
 
-mdns_hosts_update ()
-{
+mdns_hosts_update () {
 	MDNS_RESULT=$(mDNSIdentify ebanserver.local | sed -rne 's/.* Addr ([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})$/\1/p')
 
-	if test -n "$MDNS_RESULT"
-	then
+	if test -n "$MDNS_RESULT"; then
 		[ -n "$verbose" ] && echo "Found ebanserver.local at $MDNS_RESULT"
 		MDNS_HOSTLINE="$MDNS_RESULT	ebanserver.local"
 	else
