@@ -42,12 +42,16 @@ Compile the default buildroot project:
 
 This should create the file:
 
-&nbsp;&nbsp;&nbsp;&nbsp;buildroot/binaries/uclibc/rootfs.i686.ext2
+&nbsp;&nbsp;&nbsp;&nbsp;output/images/rootfs.tar
 
 This command will confirm a successful build:
 
-     $ e2tail buildroot/binaries/uclibc/rootfs.i686.ext2:/etc/br-version
-     0.10.0-svn-svn24295
+    $ tar xOf output/images/rootfs.tar ./etc/os-release
+    NAME=Buildroot
+    VERSION=2015.02-00058-g2c9b079-dirty
+    ID=buildroot
+    VERSION_ID=2015.02
+    PRETTY_NAME="Buildroot 2015.02"
 
 If a host computer cannot compile the default buildroot project, then it cannot 
 compile the DBAN buildroot project.
@@ -94,9 +98,6 @@ Common Problems
 
 * Programs that are linked against glibc are runtime incompatible with uclibc,
   even though `ldd` on the host and/or target may say otherwise.
-
-* An `svn update` in buildroot often breaks local projects.  Make the given
-  source tree work before updating components.
 
 * Microsoft Windows is an incompatible host platform.  This buildroot cannot be
   compiled by Visual Studio.
