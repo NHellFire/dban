@@ -1,8 +1,8 @@
 Buildroot for Boot And Nuke
 ===========================  
-![](https://img.shields.io/github/downloads/NHellFire/dban/latest/total.svg "Latest version")
-![](https://img.shields.io/github/downloads/NHellFire/dban/v3.0.0/total.svg)
-![](https://img.shields.io/github/downloads/NHellFire/dban/v2.2.8/total.svg)
+[![](https://img.shields.io/github/downloads/NHellFire/dban/latest/total.svg "Latest version")](https://github.com/NHellFire/dban/releases/latest)
+[![](https://img.shields.io/github/downloads/NHellFire/dban/v3.0.0/total.svg)](https://github.com/NHellFire/dban/releases/tag/v3.0.0)
+[![](https://img.shields.io/github/downloads/NHellFire/dban/v2.2.8/total.svg)](https://github.com/NHellFire/dban/releases/tag/v2.2.8)
 
 
 ####Donations
