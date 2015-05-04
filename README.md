@@ -65,6 +65,8 @@ Step 3: Build DBAN
      $ make dban_defconfig
      $ make
 
+Alternatively, `make` from the top directory will clean, compile and generate an ISO for you
+
 This will create the DBAN software in:
 
 &nbsp;&nbsp;output/images
@@ -76,7 +78,7 @@ environment.sh stub to compile local components.~~
 Step 4: Build ISO
 ------------------
 
-From toplevel:
+From top directory:
 
     $ ./master.sh
     
