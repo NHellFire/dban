@@ -49,7 +49,7 @@ find /dev -type f -name '*.result' | while read result; do
 			-e "s!#METHOD#!$DWIPE_METHOD!" \
 			/usr/local/share/dban/mbr.asm > "$device.asm"
 			yasm "$device.asm" -o "$device.bin"
-			dd if="$device.bin" of="$device" bs=512
+			dd if="$device.bin" of="$device" bs=512 2>/dev/null
 			sync
 	fi
 done
