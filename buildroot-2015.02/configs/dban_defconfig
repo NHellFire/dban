@@ -1,5 +1,4 @@
 BR2_WGET="wget --passive-ftp -nd"
-BR2_GIT="git clone"
 BR2_BACKUP_SITE="http://buildroot.net/downloads/sources/"
 BR2_KERNEL_MIRROR="http://www.kernel.org/pub/"
 BR2_JLEVEL=1
