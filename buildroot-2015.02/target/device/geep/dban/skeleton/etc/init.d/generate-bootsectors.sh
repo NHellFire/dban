@@ -33,6 +33,10 @@ find /dev -type f -name '*.result' | while read result; do
 	. "$result"
 	. "$device.env"
 
+	if [ "$DWIPE_FINGERPRINT" != "1" ]; then
+		exit
+	fi
+
 	if [ "$DWIPE_RESULT" = "error" ]; then
 		echo "Failed reading results file for $device"
 		continue
