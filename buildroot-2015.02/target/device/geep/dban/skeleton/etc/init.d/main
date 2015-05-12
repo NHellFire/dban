@@ -348,7 +348,7 @@ fi
 
 read -t 0.1 -N 255 # Empty keyboard buffer (remove 255 chars. should be enough)
 
-read -n 1 -p "Press any key to shutdown..."
+read -s -p "Press ENTER to shutdown..."
 #imgshow /usr/share/dban-ad.jpg
 #echo "Press and hold the power button to shutdown."
 poweroff
