@@ -12,3 +12,18 @@ clean:
 
 
 .PHONY: all dban clean
+
+
+
+
+# Comments
+ifeq ("a", "b")
+# This will be useful when/if we add more platforms
+ARCH ?= i586 powerpc
+
+all: $(ARCH)
+
+$(ARCH):
+	@echo Building $@
+
+endif
