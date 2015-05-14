@@ -75,7 +75,7 @@ else
 fi
 
 [ -n "$verbose" ] && echo -n "Starting the system logging daemon... "
-if syslogd
+if syslogd -s 20480
 then
 	[ -n "$verbose" ] && echo "done."
 else
