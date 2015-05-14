@@ -318,11 +318,7 @@ if [ -n "$TFTP_HOST" ]; then
 	MAC=$(ifconfig | awk '/HWaddr/{print $5;exit}')
 	MAC=${MAC//:/-}
 
-	tftp $TFTP_HOST >/dev/null 2>&1 <<EOF
-mode binary
-put "/var/log/dban.tar.gz" "/DBANLOG/dban $STARTTIME ($MAC).tar.gz"
-quit
-EOF
+	tftp -p -l "/var/log/dban.tar.gz" -r "/DBANLOG/dban $STARTTIME ($MAC).tar.gz" $TFTP_HOST >/dev/null 2>&1
 fi
 
 
