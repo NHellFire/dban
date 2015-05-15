@@ -2,7 +2,7 @@
 
 DBAN_NAME="Darik's Boot and Nuke"
 DBAN_NAME_SHORT="DBAN"
-DBAN_VERSION="3.0.0"
+DBAN_VERSION="3.0.1"
 
 # The rc scripts and dwipe program use these variables to create banners.
 export DBAN_NAME
