@@ -14,8 +14,8 @@
 	- Change to press enter to shutdown
 	- Hide dd output when writing MBRs
 	- Have syslogd erase log every 20MB
-	- Fix TFTP log upload
-	  Specify: tftp=x.x.x.x:69 in kernel args
+	- Fix TFTP log upload  
+	  Specify: tftp=x.x.x.x:69 in kernel args  
           Default TFTP port (69) will be used if omitted.
 	- Automatically configure network
 	- Only attempt to write MBR if device is still attached
