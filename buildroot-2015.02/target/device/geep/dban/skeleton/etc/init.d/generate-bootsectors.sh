@@ -41,16 +41,18 @@ find /dev -type f -name '*.result' | while read result; do
 		echo "Failed reading results file for $device"
 		continue
 	elif [ "$DWIPE_RESULT" != "skipped" ]; then
-		sed	\
-			-e "s!#MODEL#!$LSHW_PRODUCT!" \
-			-e "s!#SERIAL#!$LSHW_SERIAL!" \
-			-e "s!#DATE#!$DATE_RFC2822!" \
-			-e "s!#RESULT#!$DWIPE_RESULT!" \
-			-e "s!#METHOD#!$DWIPE_METHOD!" \
-			/usr/local/share/dban/mbr.asm > "$device.asm"
-			yasm "$device.asm" -o "$device.bin"
-			dd if="$device.bin" of="$device" bs=512 2>/dev/null
-			sync
+		if [ -b "$device" ]; then
+			sed	\
+				-e "s!#MODEL#!$LSHW_PRODUCT!" \
+				-e "s!#SERIAL#!$LSHW_SERIAL!" \
+				-e "s!#DATE#!$DATE_RFC2822!" \
+				-e "s!#RESULT#!$DWIPE_RESULT!" \
+				-e "s!#METHOD#!$DWIPE_METHOD!" \
+				/usr/local/share/dban/mbr.asm > "$device.asm"
+				yasm "$device.asm" -o "$device.bin"
+				dd if="$device.bin" of="$device" bs=512 2>/dev/null
+				sync
+		fi
 	fi
 done
 
