@@ -1,7 +1,6 @@
 BR2_WGET="wget --passive-ftp -nd"
 BR2_BACKUP_SITE="http://buildroot.net/downloads/sources/"
 BR2_KERNEL_MIRROR="http://www.kernel.org/pub/"
-BR2_JLEVEL=1
 BR2_CCACHE=y
 BR2_CCACHE_DIR="${TOPDIR}/.ccache"
 BR2_PACKAGE_OVERRIDE_FILE="$(TOPDIR)/local.mk"
