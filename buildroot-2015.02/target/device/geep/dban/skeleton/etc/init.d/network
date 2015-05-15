@@ -1,0 +1,9 @@
+#!/bin/sh
+ifup -a
+
+for iface in eth0 eth1 eth2 eth3; do
+	if [ -e /sys/class/net/$iface ]; then
+		ifconfig $iface up
+		udhcpc -i $iface -b -S
+	fi
+done
