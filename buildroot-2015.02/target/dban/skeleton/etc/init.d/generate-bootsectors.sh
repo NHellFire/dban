@@ -5,6 +5,7 @@
 #	DWIPE_ROUNDS
 #	DWIPE_VERIFY
 #	DWIPE_RESULT
+#	DWIPE_VERIFY_RESULT
 
 # sdX.env
 #	LSHW_DESCRIPTION
@@ -29,6 +30,7 @@ find /dev -type f -name '*.result' | while read result; do
 	DWIPE_VERIFY=error
 	LSHW_PRODUCT=error
 	LSHW_SERIAL=error
+	DWIPE_VERIFY_RESULT=error
 
 	. "$result"
 	. "$device.env"
@@ -41,6 +43,14 @@ find /dev -type f -name '*.result' | while read result; do
 		echo "Failed reading results file for $device"
 		continue
 	elif [ "$DWIPE_RESULT" != "skipped" ]; then
+		if [ "$DWIPE_VERIFY" = "off" ]; then
+			DWIPE_RESULT="$DWIPE_RESULT (Verification: off)"
+		elif [ "$DWIPE_VERIFY_RESULT" = "pass" ]; then
+			DWIPE_RESULT="$DWIPE_RESULT (Verification: passed)"
+		else
+			DWIPE_RESULT="$DWIPE_RESULT (Verifiction: failed)"
+		fi
+
 		if [ -b "$device" ]; then
 			sed	\
 				-e "s!#MODEL#!$LSHW_PRODUCT!" \
