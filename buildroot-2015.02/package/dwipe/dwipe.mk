@@ -9,7 +9,7 @@ define DWIPE_BUILD_CMDS
 endef
 
 define DWIPE_INSTALL_TARGET_CMDS
-	$(INSTALL) -m 0755 -D $(@D)/$(DWIPE_BINARY) $(TARGET_DIR)/usr/local/bin/
+	$(INSTALL) -m 0755 -D $(@D)/$(DWIPE_BINARY) $(TARGET_DIR)/usr/local/bin/$(DWIPE_BINARY)
 endef
 	
 
