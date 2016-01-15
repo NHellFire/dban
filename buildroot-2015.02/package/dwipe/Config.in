@@ -1,7 +1,0 @@
-config BR2_PACKAGE_DWIPE
-	bool "dwipe"
-	depends on BR2_PACKAGE_UCLIBC && BR2_PACKAGE_NCURSES
-	default n
-	help
-	  DBAN and EBAN wipe component.
-

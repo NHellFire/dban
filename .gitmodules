@@ -1,0 +1,4 @@
+[submodule "buildroot"]
+	path = buildroot
+	url = ../dban-buildroot
+	branch = dban
