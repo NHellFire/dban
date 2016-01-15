@@ -19,11 +19,14 @@ int 10h
 
 
 ; hang indefinitely
-JMP $
+idle_loop:
+hlt ; if there is nothing to do, then do nothing
+jmp idle_loop ; and do it forever
 
 
 
 output:
+	db 0xA,0xD, "Wiped with DBAN"
 	db 0xA,0xD, "Model: #MODEL# - Serial: #SERIAL#"
 	db 0xA,0xD, "Wipe finished at: #DATE# - #RESULT#"
 	db 0xA,0xD, "Method: #METHOD#"
@@ -34,8 +37,8 @@ output_len: equ $ - output
 ; Keep this at the end
 ; Will pad out to 510 Bytes, then add MBR signature
 ; Total length 512 Bytes
-; As is, program is 116 Bytes (with signature)
-; Allows 433 Bytes for generated text (placeholders are 37 Bytes)
+; As is, program is 134 Bytes (with signature)
+; Allows 415 Bytes for generated text (placeholders are 37 Bytes)
 
 times 510-($-$$) db 0
 dw 0xAA55
