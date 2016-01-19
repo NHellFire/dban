@@ -12,11 +12,12 @@ Buildroot for Boot And Nuke
 If this is useful to you, donations are appreciated (but entirely optional).
 
 [![Flattr this](https://button.flattr.com/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=NHellFire&url=http%3A%2F%2Fgithub.com%2FNHellFire%2Fdban "Flattr this")  
-LTC: LQPnvEMpeA2jPurnXUXzh9dfrAhNtTYf8V
+LTC: LZwDu9ADcy6puJ9FfuqxDAXQRH8Xa9Pswo
+BTC: 1F8qZ45rLyF2K6xhYz4kJVbvdEmXXVLxH
 
 ----
 
-Step 1: Documentation
+Step 0: Documentation
 ---------------------
 
 This is the build framework for DBAN:
@@ -29,6 +30,13 @@ The DBAN source code is given as a buildroot BOARD project.
 Start reading here:
 
 &nbsp;&nbsp;&nbsp;&nbsp;buildroot/docs/manual/manual.html
+
+Step 1: Clone source
+--------------------
+
+Get a local copy of the DBAN source:
+
+    $ git clone --recursive https://github.com/NHellFire/dban.git
 
 
 Step 2:  Check Host Compatibility
