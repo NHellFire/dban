@@ -71,7 +71,7 @@ Step 3: Build DBAN
 
      $ cd buildroot
      $ make clean
-     $ make dban_defconfig
+     $ make dban_i586_defconfig
      $ make
 
 Alternatively, `make` from the top directory will clean, compile and generate an ISO for you

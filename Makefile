@@ -2,7 +2,7 @@ all: dban
 
 
 dban: clean
-	make -C buildroot dban_defconfig
+	make -C buildroot dban_i586_defconfig
 	make -C buildroot -j8
 	./master.sh
 
