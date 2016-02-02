@@ -1,0 +1,6 @@
+# EXTN   XLate  CREATOR  TYPE   Comment
+.b       Raw    'UNIX'  'tbxi'  "bootstrap"
+.conf    Raw    'UNIX'  'conf'  "bootstrap"
+dban.bzi     Raw    'UNIX'  'boot'  "kernel"
+yaboot   Raw    'UNIX'  'boot'  "bootstrap"
+*        Raw    'UNIX'  'UNIX'  "unix"

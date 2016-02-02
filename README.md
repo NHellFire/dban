@@ -69,16 +69,13 @@ compile the DBAN buildroot project.
 Step 3: Build DBAN
 ------------------
 
-     $ cd buildroot
-     $ make clean
-     $ make dban_i586_defconfig
-     $ make
+Check available architectures:
+     $ ls buildroot/configs/dban_*
 
-Alternatively, `make` from the top directory will clean, compile and generate an ISO for you
+Build DBAN:    
+     $ make ARCH=XXX
 
-This will create the DBAN software in:
-
-&nbsp;&nbsp;output/images
+This will compile DBAN and create an ISO in the current directory, as well as a copy of the kernel in buildroot/output/images
 
 ~~Some components are unpackaged and must be built locally.  Use the
 environment.sh stub to compile local components.~~

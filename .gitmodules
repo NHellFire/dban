@@ -2,3 +2,9 @@
 	path = buildroot
 	url = ../dban-buildroot
 	branch = dban
+[submodule "custom/powerpc/e2fsprogs"]
+	path = custom/powerpc/e2fsprogs
+	url = git://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
+[submodule "custom/powerpc/yaboot"]
+	path = custom/powerpc/yaboot
+	url = ../dban-yaboot
