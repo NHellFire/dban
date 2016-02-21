@@ -1,3 +1,18 @@
+### Unreleased v3.0.2:
+
+- Automatically shutdown 1 hour after successful wipe
+
+- Add PowerPC build
+
+- Update MBR code with some parts of #13
+
+- dwipe: Check for failed verification
+
+- kernel: Disable network autoconfiguration
+
+&nbsp;
+&nbsp;
+
 ### Released v3.0.1, 12th May 2015:
 
 - Allow turning disk fingerprinting off
