@@ -10,6 +10,9 @@
 
 - kernel: Disable network autoconfiguration
 
+- skeleton:
+    - Fix cciss devices not being detected
+
 &nbsp;
 &nbsp;
 
