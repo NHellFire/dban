@@ -14,6 +14,13 @@ OUTDIR=isoroot/${BR2_ARCH}/output
 INDIR=isoroot/${BR2_ARCH}/input
 VOLUME="DBAN v$DBAN_VERSION ($BR2_ARCH)"
 
+PRERELEASE=0
+if ! git describe --tags --exact-match >/dev/null 2>&1; then
+	GIT_VERSION=$(git log -1 --date=format:"%Y%m%d" --pretty=format:"%cd-g%h")
+	VOLUME="DBAN $GIT_VERSION"
+	PRERELEASE=1
+fi
+
 BZIMAGE_DIR=
 
 MKISOFS_ARGS=()
@@ -39,7 +46,11 @@ test ! -r "$BR2_BZIMAGE" && echo "$0: $BR2_BZIMAGE is missing." && exit 4
 
 cp -v "$BR2_BZIMAGE" "$OUTDIR/$BZIMAGE_DIR/dban.bzi"
 
-OUTNAME="dban-${DBAN_VERSION}_linux-${BR2_LINUX_KERNEL_VERSION}_${BR2_ARCH}.iso"
+if [ "$PRERELEASE" = "0" ]; then
+	OUTNAME="dban-${DBAN_VERSION}_linux-${BR2_LINUX_KERNEL_VERSION}_${BR2_ARCH}.iso"
+else
+	OUTNAME="dban-${GIT_VERSION}_linux-${BR2_LINUX_KERNEL_VERSION}_${BR2_ARCH}.iso"
+fi
 
 mkdir -p $OUTDIR
 cp -r isoroot/generic/* $OUTDIR/
