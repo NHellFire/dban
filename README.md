@@ -11,7 +11,7 @@ Buildroot for Boot And Nuke
 
 If this is useful to you, donations are appreciated (but entirely optional).
 
-[![Flattr this](https://button.flattr.com/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=NHellFire&url=http%3A%2F%2Fgithub.com%2FNHellFire%2Fdban "Flattr this")  
+[![Flattr this](https://button.flattr.com/flattr-badge-large.png)](https://flattr.com/profile/NHellFire "Flattr this")  
 LTC: LZwDu9ADcy6puJ9FfuqxDAXQRH8Xa9Pswo
 BTC: 1F8qZ45rLyF2K6xhYz4kJVbvdEmXXVLxH
 
