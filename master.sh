@@ -14,6 +14,7 @@ OUTDIR=isoroot/${BR2_ARCH}/output
 INDIR=isoroot/${BR2_ARCH}/input
 VOLUME="DBAN v$DBAN_VERSION ($BR2_ARCH)"
 
+ISOHYBRID=0
 PRERELEASE=0
 if ! git describe --tags --exact-match >/dev/null 2>&1; then
 	GIT_VERSION=$(git log -1 --date=format:"%Y%m%d" --pretty=format:"%cd-g%h")
@@ -29,6 +30,7 @@ case "${BR2_ARCH}" in
 		test ! -r "$INDIR/isolinux.bin" && echo "$0: $INDIR/isolinux.bin is missing." && exit 3
 		MKISOFS_ARGS+=(-b isolinux.bin -c isolinux.cat -no-emul-boot -boot-load-size 4 -boot-info-table)
 		MKISOFS_ARGS+=(-V "$VOLUME")
+		ISOHYBRID=1
 	;;
 	powerpc)
 		test ! -r "$INDIR/ppc/yaboot" && echo "$0: $INDIR/ppc/yaboot is missing." && exit 3
@@ -56,4 +58,5 @@ mkdir -p $OUTDIR
 cp -r isoroot/generic/* $OUTDIR/
 cp -r $INDIR/* $OUTDIR/
 mkisofs -o "$OUTNAME" "${MKISOFS_ARGS[@]}" "$OUTDIR"
+[ "$ISOHYBRID" = "1" ] && ./isohybrid.pl "$OUTNAME"
 ls -ll "$OUTNAME"
