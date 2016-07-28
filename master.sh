@@ -58,5 +58,5 @@ mkdir -p $OUTDIR
 cp -r isoroot/generic/* $OUTDIR/
 cp -r $INDIR/* $OUTDIR/
 mkisofs -o "$OUTNAME" "${MKISOFS_ARGS[@]}" "$OUTDIR"
-[ "$ISOHYBRID" = "1" ] && ./isohybrid.pl "$OUTNAME"
+[ "$ISOHYBRID" = "1" ] && ./isohybrid "$OUTNAME"
 ls -ll "$OUTNAME"
