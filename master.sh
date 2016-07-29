@@ -17,7 +17,7 @@ VOLUME="DBAN v$DBAN_VERSION ($BR2_ARCH)"
 ISOHYBRID=0
 PRERELEASE=0
 
-GIT_TAG=$(git describe --tags --exact-match 2>&1)
+GIT_TAG=$(git describe --tags --exact-match 2>/dev/null)
 if [ -z "$GIT_TAG" -o "${GIT_TAG%/*}" = "nightly" ]; then
 	GIT_VERSION=$(git log -1 --date=format:"%Y%m%d" --pretty=format:"%cd-g%h")
 	VOLUME="DBAN $GIT_VERSION"
