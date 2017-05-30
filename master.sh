@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 BR2_CONFIG=buildroot/.config
 
@@ -14,10 +15,9 @@ OUTDIR=isoroot/${BR2_ARCH}/output
 INDIR=isoroot/${BR2_ARCH}/input
 VOLUME="DBAN v$DBAN_VERSION ($BR2_ARCH)"
 
-ISOHYBRID=0
 PRERELEASE=0
 
-GIT_TAG=$(git describe --tags --exact-match 2>/dev/null)
+GIT_TAG=$(git describe --tags --exact-match 2>/dev/null || true)
 if [ -z "$GIT_TAG" -o "${GIT_TAG%/*}" = "nightly" ]; then
 	GIT_VERSION=$(git log -1 --date=format:"%Y%m%d" --pretty=format:"%cd-g%h")
 	VOLUME="DBAN $GIT_VERSION"
@@ -26,16 +26,24 @@ fi
 
 BZIMAGE_DIR=
 
+mkdir -p $OUTDIR
+
+MKISOFS="xorriso -as mkisofs"
 MKISOFS_ARGS=()
 case "${BR2_ARCH}" in
 	i586)
 		test ! -r "$INDIR/isolinux.bin" && echo "$0: $INDIR/isolinux.bin is missing." && exit 3
 		MKISOFS_ARGS+=(-b isolinux.bin -c isolinux.cat -no-emul-boot -boot-load-size 4 -boot-info-table)
 		MKISOFS_ARGS+=(-V "$VOLUME")
-		ISOHYBRID=1
+		# Copy GRUB files
+		for file in efiboot.img grub.cfg; do
+			cp -v "custom/EFI-grub/$file" "$OUTDIR/"
+		done
+		MKISOFS_ARGS+=(-isohybrid-mbr "$INDIR/../isohdpfx.bin" -isohybrid-gpt-basdat -eltorito-alt-boot -e efiboot.img -no-emul-boot)
 	;;
 	powerpc)
 		test ! -r "$INDIR/ppc/yaboot" && echo "$0: $INDIR/ppc/yaboot is missing." && exit 3
+		MKISOFS="mkisofs"
 		MKISOFS_ARGS+=(-chrp-boot -hfs -no-cache-inodes -no-desktop -part -r)
 		MKISOFS_ARGS+=(-map "$OUTDIR/ppc/map")
 		MKISOFS_ARGS+=(-hfs-bless "$OUTDIR/ppc")
@@ -56,9 +64,9 @@ else
 	OUTNAME="dban-${GIT_VERSION}_linux-${BR2_LINUX_KERNEL_VERSION}_${BR2_ARCH}.iso"
 fi
 
-mkdir -p $OUTDIR
 cp -r isoroot/generic/* $OUTDIR/
 cp -r $INDIR/* $OUTDIR/
-mkisofs -o "$OUTNAME" "${MKISOFS_ARGS[@]}" "$OUTDIR"
-[ "$ISOHYBRID" = "1" ] && ./isohybrid "$OUTNAME"
+echo "> $MKISOFS -o $OUTNAME ${MKISOFS_ARGS[@]} $OUTDIR"
+$MKISOFS -o "$OUTNAME" "${MKISOFS_ARGS[@]}" "$OUTDIR"
 ls -ll "$OUTNAME"
+rm -rf "$OUTDIR"
