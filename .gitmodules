@@ -8,3 +8,6 @@
 [submodule "custom/powerpc/yaboot"]
 	path = custom/powerpc/yaboot
 	url = ../dban-yaboot
+[submodule "custom/EFI-grub/git"]
+	path = custom/EFI-grub/git
+	url = git://git.savannah.gnu.org/grub.git
