@@ -49,15 +49,15 @@ esac
 
 test ! -r "$BR2_BZIMAGE" && echo "$0: $BR2_BZIMAGE is missing." && exit 4
 
-cp -v "$BR2_BZIMAGE" "$OUTDIR/$BZIMAGE_DIR/dban.bzi"
-
 if [ "$PRERELEASE" = "0" ]; then
 	OUTNAME="dban-${DBAN_VERSION}_linux-${BR2_LINUX_KERNEL_VERSION}_${BR2_ARCH}.iso"
 else
 	OUTNAME="dban-${GIT_VERSION}_linux-${BR2_LINUX_KERNEL_VERSION}_${BR2_ARCH}.iso"
 fi
 
+rm -rf $OUTDIR
 mkdir -p $OUTDIR
+cp -v "$BR2_BZIMAGE" "$OUTDIR/$BZIMAGE_DIR/dban.bzi"
 cp -r isoroot/generic/* $OUTDIR/
 cp -r $INDIR/* $OUTDIR/
 mkisofs -o "$OUTNAME" "${MKISOFS_ARGS[@]}" "$OUTDIR"
