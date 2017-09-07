@@ -14,7 +14,7 @@
  All DBAN components are subject to copyright and are licensed; many by the
  GPL and similar FLOSS licenses. Review the source code for more information.
 
- Additional documentation is available at http://www.dban.org/
+ Additional documentation is available at https://github.com/NHellFire/dban
 
  Press the 1fF117 key to continue.
 

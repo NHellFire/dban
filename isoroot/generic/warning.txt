@@ -9,8 +9,6 @@
   shall the software authors or contributors be liable for any damages arising
   from the use of this software.  This software is provided "as is".
 
-  http://www.dban.org/
-
   * Press the 1fF217 key to learn about DBAN.
   * Press the 1fF317 key for a list of quick commands.
   * Press the 1fF417 key to read the RAID disclaimer.
