@@ -57,9 +57,9 @@ fi
 
 rm -rf $OUTDIR
 mkdir -p $OUTDIR
-cp -v "$BR2_BZIMAGE" "$OUTDIR/$BZIMAGE_DIR/dban.bzi"
 cp -r isoroot/generic/* $OUTDIR/
 cp -r $INDIR/* $OUTDIR/
+cp -v "$BR2_BZIMAGE" "$OUTDIR/$BZIMAGE_DIR/dban.bzi"
 mkisofs -o "$OUTNAME" "${MKISOFS_ARGS[@]}" "$OUTDIR"
 [ "$ISOHYBRID" = "1" ] && ./isohybrid "$OUTNAME"
 ls -ll "$OUTNAME"
