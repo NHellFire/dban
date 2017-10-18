@@ -1,5 +1,5 @@
 language: cpp
 dist: trusty
 sudo: required
-script: make -s
+script: ./.travis.sh
 
