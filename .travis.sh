@@ -1,4 +1,11 @@
 #!/bin/sh
-while :; do printf .; sleep 300; done & pid=$!
-trap "kill -TERM $pid" INT TERM EXIT
-make
+logfile=$(mktemp)
+while :; do printf .; sleep 30; done & pid=$!
+trap "cleanup" INT TERM EXIT
+cleanup() {
+	kill -TERM $pid
+	tail -n 500 "$logfile"
+	rm -f "$logfile"
+}
+
+make > "$logfile" 2>&1
