@@ -1,5 +1,9 @@
 language: cpp
 dist: trusty
 sudo: required
-script: ./.travis.sh
-
+before_install:
+- sudo apt-get update -qq
+- sudo apt-get install -qq genisoimage xorriso
+script:
+- ./.travis.sh i586
+- ./.travis.sh ppc
